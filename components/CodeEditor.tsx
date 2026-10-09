@@ -21,6 +21,7 @@ const PRISM_LANG: Record<Language, string> = {
 };
 
 export default function CodeEditor({ code, language, onChange }: Props) {
+  const wrapRef = React.useRef<HTMLDivElement>(null);
   const highlight = React.useCallback(
     (c: string) => {
       try {
@@ -32,8 +33,17 @@ export default function CodeEditor({ code, language, onChange }: Props) {
     [language]
   );
 
+  // Paste doesn't reliably trigger react-simple-code-editor's onValueChange,
+  // so force the new value through after the browser applies the paste.
+  const handlePaste = React.useCallback(() => {
+    setTimeout(() => {
+      const ta = wrapRef.current?.querySelector('textarea');
+      if (ta && ta.value !== code) onChange(ta.value);
+    }, 0);
+  }, [code, onChange]);
+
   return (
-    <div className="rounded-xl border border-white/10 bg-[#0d1117] overflow-hidden shadow-2xl">
+    <div ref={wrapRef} onPaste={handlePaste} className="rounded-xl border border-white/10 bg-[#0d1117] overflow-hidden shadow-2xl">
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-white/[0.02]">
         <span className="w-3 h-3 rounded-full bg-red-500/80" />
         <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
