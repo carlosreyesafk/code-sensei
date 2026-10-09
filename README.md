@@ -2,7 +2,7 @@
 
 **Your senior developer in the browser.** Paste code → get an instant, expert-level review: bugs, cyclomatic complexity, code smells, and exactly how to fix each one.
 
-🌐 **Live demo:** https://code-sensei.vercel.app *(URL updates after deploy)*
+🌐 **Live demo:** https://code-sensei-gbog5r0fw-carlosreyesafks-projects.vercel.app
 
 ## What it does
 
